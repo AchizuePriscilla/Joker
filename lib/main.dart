@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:joker/presentation/views/splash_screen.dart';
+import 'package:joker/utils/locator.dart';
 
-void main() {
+void main() async {
+  await setupLocator();
   runApp(const MyApp());
 }
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Joker',
-      home:  SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

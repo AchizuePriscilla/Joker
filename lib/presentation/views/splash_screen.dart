@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:joker/presentation/views/joke_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:joker/presentation/viewmodels/joke_viewmodel.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -8,6 +11,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getRandomJoke();
+  }
+
+  getRandomJoke() async {
+    await context.read<JokeViewModel>().getRandomJoke().then((value) =>
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) {
+          return const JokeScreen();
+        })));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
