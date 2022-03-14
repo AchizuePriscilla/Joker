@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:joker/presentation/viewmodels/joke_viewmodel.dart';
 import 'package:joker/presentation/views/splash_screen.dart';
@@ -10,8 +12,24 @@ class JokeScreen extends StatefulWidget {
   _JokeScreenState createState() => _JokeScreenState();
 }
 
-class _JokeScreenState extends State<JokeScreen> {
+class _JokeScreenState extends State<JokeScreen>
+    with SingleTickerProviderStateMixin {
   bool isTapped = false;
+  late AnimationController animationController;
+  double animationValue = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    animationController.addListener(() {
+      setState(() {
+        animationValue = animationController.value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var jokeModel = context.read<JokeViewModel>().jokeModel;
@@ -37,6 +55,7 @@ class _JokeScreenState extends State<JokeScreen> {
                   setState(() {
                     isTapped = true;
                   });
+                  animationController.forward();
                   Future.delayed(const Duration(seconds: 3), () {
                     Navigator.of(context)
                         .pushReplacement(MaterialPageRoute(builder: (context) {
@@ -56,11 +75,19 @@ class _JokeScreenState extends State<JokeScreen> {
               ),
               Visibility(
                 visible: isTapped,
-                child: Text(
-                  jokeModel.punchline,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: 15),
+                child: SlideTransition(
+                  position: Tween<Offset>(
+                          begin: const Offset(1, 0.5), end: const Offset(0, 0))
+                      .animate(animationController),
+                  child: Opacity(
+                    opacity: animationValue,
+                    child: Text(
+                      jokeModel.punchline,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 15),
+                    ),
+                  ),
                 ),
               )
             ]),
