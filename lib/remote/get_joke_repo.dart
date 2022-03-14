@@ -11,7 +11,7 @@ class JokeRepositoryImpl extends Remote implements JokeRepository {
   @override
   Future<JokeModel> getJoke() async {
     var response =
-        await dio.get("jokes/random");
+        await dio.get("random");
     return JokeModel.fromMap(response.data);
   }
 }

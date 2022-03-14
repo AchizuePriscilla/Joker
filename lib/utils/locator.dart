@@ -3,7 +3,7 @@ import 'package:joker/remote/get_joke_repo.dart';
 import 'package:joker/services/get_joke_service.dart';
 GetIt locator = GetIt.instance;
 
-Future<void> setupLocator({String baseApi = 'https://official-joke-api.appspot.com/'}) async {
+Future<void> setupLocator({String baseApi = 'https://joke.api.gkamelo.xyz/'}) async {
   //Services
   locator.registerLazySingleton<JokeService>(
     () => JokeServiceImpl(
