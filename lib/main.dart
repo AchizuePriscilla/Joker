@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:joker/presentation/views/splash_screen.dart';
+import 'package:joker/presentation/views/joke_screen.dart';
 import 'package:joker/utils/locator.dart';
 import 'package:joker/utils/providers.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return const MaterialApp(
           title: 'Joker',
-          home: SplashScreen(),
+          home: JokeScreen(),
         );
       },
     );
